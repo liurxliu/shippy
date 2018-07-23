@@ -29,7 +29,7 @@ func (s *service) CreateConsignment(ctx context.Context, req *pb.Consignment, re
 		return err
 	}
 	req.VesselId = vesselResponse.Vessel.Id
-	err = repo.Create(req)
+	err = s.GetRepo().Create(req)
 	if err != nil {
 		return err
 	}

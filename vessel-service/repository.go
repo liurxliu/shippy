@@ -12,7 +12,7 @@ const (
 )
 
 type Repository interface {
-	FinadAvailable(*pb.Specification) (*pb.Vessel, error)
+	FindAvailable(*pb.Specification) (*pb.Vessel, error)
 	Create(vessel *pb.Vessel) error
 	Close()
 }

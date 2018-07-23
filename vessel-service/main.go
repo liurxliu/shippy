@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	pb "github.com/liurxliu/shippy/vessel-service/proto/vessel"
 	"github.com/micro/go-micro"
 	"os"
+	pb "shippy/vessel-service/proto/vessel"
 )
 
 const (
