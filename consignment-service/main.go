@@ -7,7 +7,7 @@ import (
 	micro "github.com/micro/go-micro"
 	"golang.org/x/net/context"
 	pb "shippy/consignment-service/proto/consignment"
-	vesselProto "shippy/vessel-service/proto/vessel"
+	vesselProto "github.com/liurxliu/shippy/vessel-service/proto/vessel"
 )
 
 type Repository interface {
