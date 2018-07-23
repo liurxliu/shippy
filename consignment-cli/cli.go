@@ -6,10 +6,10 @@ import (
 	"log"
 	"os"
 
-	pb "github.com/liurxliu/shippy/consignment-service/proto/consignment"
 	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/cmd"
 	"golang.org/x/net/context"
+	pb "shippy/consignment-service/proto/consignment"
 )
 
 const (
