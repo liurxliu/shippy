@@ -12,7 +12,7 @@ const (
 
 type Repository interface {
 	Create(*pb.Consignment) error
-	GetAll([]*pb.Consignment, error)
+	GetAll() ([]*pb.Consignment, error)
 	Close()
 }
 

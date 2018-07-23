@@ -3,21 +3,22 @@ package main
 import (
 	vesselProto "github.com/liurxliu/shippy/vessel-service/proto/vessel"
 	"golang.org/x/net/context"
+	"gopkg.in/mgo.v2"
 	"log"
 	pb "shippy/consignment-service/proto/consignment"
 )
 
-type handler struct {
+type service struct {
+	session      *mgo.Session
 	vesselClient vesselProto.VesselServiceClient
 }
 
-func (s *handler) GetRepo() Repository {
+func (s *service) GetRepo() Repository {
 	return &ConsignmentRepository{s.session.Clone()}
 }
 
-func (s *handler) CreateConsignment(ctx context.Context, req *pb.Consignment, res *pb.Response) error {
-	repo := s.GetRepo()
-	defer repo.Close()
+func (s *service) CreateConsignment(ctx context.Context, req *pb.Consignment, res *pb.Response) error {
+	defer s.GetRepo().Close()
 
 	vesselResponse, err := s.vesselClient.FindAvailable(context.Background(), &vesselProto.Specification{
 		MaxWeight: req.Weight,
@@ -37,10 +38,9 @@ func (s *handler) CreateConsignment(ctx context.Context, req *pb.Consignment, re
 	return nil
 }
 
-func (s *handler) GetConsignments(ctx context.Context, req *pb.GetRequest, res *pb.Response) error {
-	repo := s.GetRepo()
-	defer repo.Close()
-	consignments, err := repo.GetAll()
+func (s *service) GetConsignments(ctx context.Context, req *pb.GetRequest, res *pb.Response) error {
+	defer s.GetRepo().Close()
+	consignments, err := s.GetRepo().GetAll()
 	if err != nil {
 		return err
 	}
