@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
-	pb "shippy/user-service/proto/auth"
+	pb "shippy/user-service/proto/user"
 )
 
 type Repository interface {
@@ -41,7 +41,7 @@ func (repo *UserRepository) Create(user *pb.User) error {
 }
 
 func (repo *UserRepository) GetByEmail(email string) (*pb.User, error) {
-	user := *pb.User{}
+	user := &pb.User{}
 	if err := repo.db.Where("email = ?", email).
 		First(&user).Error; err != nil {
 		return nil, err
