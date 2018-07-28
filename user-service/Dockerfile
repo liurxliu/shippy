@@ -1,13 +1,16 @@
 FROM golang:1.9.0 as builder
 
-WORKDIR /go/src/shippy/consignment-service
+WORKDIR /go/src/shippy/user-service
 COPY . .
+
 RUN go get
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo .
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
+
 RUN mkdir /app
 WORKDIR /app
-COPY --from=builder /go/src/shippy/consignment-service/consignment-service .
-CMD ["./consignment-service"]
+
+COPY --from=builder /go/src/shippy/user-service .
+CMD ["./user-service"]
